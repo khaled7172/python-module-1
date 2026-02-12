@@ -169,6 +169,40 @@ and car the object would be passed as a hidden
 
 parameter implicitly you could say
 
+zip is one of python's most useful tools for working with multiple sequences at the same time:
+
+zip()
+It takes 2 or more lists(or any iterable) and coombines them element by element into tuples
+
+example:
+names = ["rose", "cactus", "oak"]
+heights = [25, 500, 5]
+
+for n, h in zip(names, heights):
+    print(n, h)
+first element of names pairs with first element of heights
+it is like
+Plant(names[x], heights[x], ages[x]) done n times
+instead you can do
+Plant(n, h, a) for n, h, a in zip(names, heights, ages)
+Notes:
+if your lists are diff lengths, zip() stops at the shortest list
+
+plants = [] created an empty list
+plants.append() is a method that adds items to the list
+plants = [Plant(n, h, a) for n, h, a in zip(names, heights, ages)]
+This is a shorter cleaner version of the creation to avoid appending item by item
+Encapsulation / data hiding:
+done by prefixing variables with _(protected)
+or __ (private) to discourage direct access
+example:
+self.__height = height
+public can be accessed anywhere
+protected can still be accessed anywhere it just shows internal hints not strict
+private can be accessed only inside the class and very strict and forces you to use your setters and getters
+Inheritance is doen by building SecurePlant class starting from your Plant class
+inside __init__ if invalid age or height you cant return anything like return "" you can only return none
+which means you could print but you cannot do return "this is invalid"
 ## Description
 
 ### Instructions
