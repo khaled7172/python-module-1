@@ -203,6 +203,16 @@ private can be accessed only inside the class and very strict and forces you to 
 Inheritance is doen by building SecurePlant class starting from your Plant class
 inside __init__ if invalid age or height you cant return anything like return "" you can only return none
 which means you could print but you cannot do return "this is invalid"
+Git lifesavers:
+when changing code on both your remote and local your branches diverse and you have to enter rebase hell
+First if your local has everything:
+stage and commit your changes
+git pull --rebase keeps your history clean as it repplies your local commits on top of the fetched ones
+but if you run into a rebase thing, i say its not worth it
+If you want your local code to overwrite everything
+git push --force
+or If you trust the remote and want to delete your local changes permanently:
+git reset --hard origin/master then pull from github
 ## Description
 
 ### Instructions
