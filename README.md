@@ -1,226 +1,269 @@
-*This project has been created as part of the 42 curriculum by khhammou*
+# 🌱 Python OOP Project – 42 Curriculum
 
-# Pre-requisites to understand:
+*Created as part of the 42 curriculum by khhammou*
 
+---
 
-How to run a pythin file?
+# 📌 Pre-requisites
 
-First when python runs a file, it sets a special variable:
+## ▶️ How to Run a Python File
 
+When Python runs a file, it sets a special variable:
+
+```python
 __name__
+```
 
-If the file is executed directly(python3 file.py)
+* If executed directly:
 
-then __name__ == "__main__"
+```bash
+python3 file.py
+```
 
-If file is imported:
+Then `__name__ == "__main__"`
 
+* If imported:
+
+```python
 import file
+```
 
-then __name__ == "file"
+Then `__name__ == "file"`
 
-so when we do
+### Why use:
 
+```python
 if __name__ == "__main__":
+```
 
-it means only run this block if the file is executed directly
+Only runs the code when the file is executed directly, not on import.
 
-if we import and remove the if check
+---
 
-then the code runs immediatly during import
+## 🐍 Shebang Line
 
-just importing the file executes its code and you lose control
-
-This is bad because you dont want test code running automatically
-
-so the if check stops it from running automatically when imported basically
-
-Shebang line:
-
+```bash
 #!/usr/bin/env python3
+```
 
-It tells the OS use python 3 to execute this file
+Allows execution via `./script.py` instead of `python3 script.py`.
 
-with shabang instead of doing python3 script.py
+---
 
-you can do ./script.py
+## 🔁 Git Quick Tips
 
-/env searches for python3 in your system PATH
-
-Rename remotes and current branch:
-
+```bash
 git remote rename origin github
-
 git branch -m master
+git pull --rebase
+git push --force
+git reset --hard origin/master
+```
 
-Reminder about some python syntax:
+---
 
-range(i, b)
+# 🧠 Python Concepts Review
 
-for i in range(0, 5)
+## 🔄 range()
 
-means i starts at 0 and while i < 5 we iterate and it increments
+```python
+for i in range(0, 5):
+```
 
+* Starts at 0, stops before 5
 
-Class vs Object:
+---
 
-Class is the blueprint
+## 🏗 Class vs Object
 
-example:
+### Class
 
-class ClassName():
+Blueprint definition:
 
-    attr: attr type
-    
-    age: int
+```python
+class Plant:
+    name: str
+    height: int
+```
 
+(Type annotations, not instance variables)
 
-object is a real instance created from the blueprint
+### Object
 
-Each object has its own values
+Instance of a class:
 
-__init__ is the constructor
+```python
+rose = Plant("Rose", 20)
+```
 
-It runs automatically when you create a new object like
+---
 
-rose = className(attr1, attr2, attr3)
+## 🛠 **init** Constructor
 
-It sets up self.attr1 and same for the other 2 attrs
+```python
+def __init__(self, name, height):
+    self.name = name
+    self.height = height
+```
 
-defined like:
+`self` refers to the current object.
 
-def __init__(self, attr1, attr2, attr3):
+---
 
-    self.attr1 = attr1
+## 🔑 What is `self`?
 
-    etc..
+Python automatically passes the object to methods:
 
-What does self mean?
+```python
+rose.grow() # internally Plant.grow(rose)
+```
 
+---
 
-self means this specific object
+# 🔒 Encapsulation
 
-if u create like
+* Public → normal variable
+* Protected → `_variable`
+* Private → `__variable`
 
-rose = className("rose", 2, 30)
+Example:
 
-then inside the class
+```python
+self.__height = height
+```
 
-self.name refers to rose.name
+---
 
+# 🧬 Inheritance
 
+```python
+class Child(Parent):
+```
 
-you need self to modify the instance
+Child can override parent methods (polymorphism).
+Use `super()` to call parent logic.
 
-classes are not defined with parameters in paranthesis, thats only for inheritance
+---
 
-self means specific for this object
+# 🏷 Getting Class Name
 
+```python
+self.__class__.__name__
+```
 
-so we can do rose.name and sunflower.name and each obj stores its own attributes
+---
 
-class Plant():
-        name: str
+# 🖨 print() vs return
 
+### print()
 
-        height: int
-        age: int
+* Displays immediately
+* Returns None
+* Cannot be reused
 
+### return
 
-writing it like this just creates class 
+* Sends data back to caller
+* Does NOT print automatically
+* Can be stored, modified, reused
 
+Best practice: methods return data; main decides what to print.
 
-annotations not instance variables
+---
 
+# 🔗 zip()
 
-Each object won't get those attributes
+Combines iterables element by element:
 
-
-
-
-class annotations are like metadata and type 
-
-
-
-hints and are not instances variables and methods 
-
-
-that can be used
-
-
-when you call a method on an object, python sends 
-
-
-
-the object itself as self, as a parameter so if 
-
-
-your method is defined like def get_help(self, name)
-
-when used in code u create a object car for 
-
-
-example
-
-
-and you can do car.get_help("Camaro")
-
-and car the object would be passed as a hidden 
-
-parameter implicitly you could say
-
-zip is one of python's most useful tools for working with multiple sequences at the same time:
-
-zip()
-It takes 2 or more lists(or any iterable) and coombines them element by element into tuples
-
-example:
-names = ["rose", "cactus", "oak"]
-heights = [25, 500, 5]
-
+```python
 for n, h in zip(names, heights):
     print(n, h)
-first element of names pairs with first element of heights
-it is like
-Plant(names[x], heights[x], ages[x]) done n times
-instead you can do
-Plant(n, h, a) for n, h, a in zip(names, heights, ages)
-Notes:
-if your lists are diff lengths, zip() stops at the shortest list
+```
 
-plants = [] created an empty list
-plants.append() is a method that adds items to the list
-plants = [Plant(n, h, a) for n, h, a in zip(names, heights, ages)]
-This is a shorter cleaner version of the creation to avoid appending item by item
-Encapsulation / data hiding:
-done by prefixing variables with _(protected)
-or __ (private) to discourage direct access
-example:
-self.__height = height
-public can be accessed anywhere
-protected can still be accessed anywhere it just shows internal hints not strict
-private can be accessed only inside the class and very strict and forces you to use your setters and getters
-Inheritance is doen by building SecurePlant class starting from your Plant class
-inside __init__ if invalid age or height you cant return anything like return "" you can only return none
-which means you could print but you cannot do return "this is invalid"
-Git lifesavers:
-when changing code on both your remote and local your branches diverse and you have to enter rebase hell
-First if your local has everything:
-stage and commit your changes
-git pull --rebase keeps your history clean as it repplies your local commits on top of the fetched ones
-but if you run into a rebase thing, i say its not worth it
-If you want your local code to overwrite everything
-git push --force
-or If you trust the remote and want to delete your local changes permanently:
-git reset --hard origin/master then pull from github
-## Description
+Stops at the shortest list.
 
-### Instructions
+List comprehension:
 
+```python
+plants = [Plant(n, h) for n, h in zip(names, heights)]
+```
 
-## Resources
+---
 
+# 🧱 Class Variables
 
+Shared across all instances:
 
-## AI Usage
+```python
+class Garden:
+    total_gardens = 0
+```
 
+---
+
+# 🏛 Class Methods
+
+```python
+@classmethod
+def method(cls):
+    cls.class_var = 0
+```
+
+* Access class itself
+* Modify class variables
+
+---
+
+To increment or decrement a variable you must first initialize it to a value
+else it would throw a UnboundLocalError
+
+# 🧰 Static Methods
+
+```python
+@staticmethod
+def add(x, y):
+    return x + y
+```
+
+* Belongs to class
+* No access to `self` or `cls`
+
+---
+
+# 📏 Code Style (flake8)
+
+* Max line length: 79 chars
+* 1 blank line between methods
+* 2 blank lines before `if __name__ == "__main__":`
+
+---
+
+# 📖 Project Description
+
+Covers:
+
+* Object-Oriented Programming
+* Inheritance chains
+* Encapsulation
+* Class & static methods
+* Clean Python practices
+
+---
+
+# 📚 Resources
+
+* Python Official Documentation
+* 42 Intranet Subject
+* flake8 Style Guide
+
+---
+
+# 🤖 AI Usage
+
+AI was used as:
+
+* Concept clarifier
+* Design reviewer
+* Debugging assistant
+
+All code logic and understanding manually validated.
