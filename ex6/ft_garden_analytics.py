@@ -1,32 +1,38 @@
 class Plant:
-    def __init__(self, name, height, age):
+    def __init__(self, name: str, height: int, age: int) -> None:
         self.name = name
         self.height = height
         self.age = age
 
-    def get_plant_info(self):
+    def get_plant_info(self) -> str:
         return f"- {self.name}: {self.height}cm"
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += 1
 
-    def age_plant(self):
+    def age_plant(self) -> None:
         self.age += 7
 
 
 class FloweringPlant(Plant):
-    def __init__(self, name, height, age, flower_color, bloom_state):
+    def __init__(
+            self,
+            name: str,
+            height: int,
+            age: int,
+            flower_color: str,
+            bloom_state: bool) -> None:
         super().__init__(name, height, age)
         self.flower_color = flower_color
         self.bloom_state = bloom_state
 
-    def bloom(self):
+    def bloom(self) -> str:
         if self.bloom_state is True:
             return "(blooming)"
         else:
             return "(not blooming)"
 
-    def get_plant_info(self):
+    def get_plant_info(self) -> str:
         return (
             f"{super().get_plant_info()}, {self.flower_color} "
             f"flowers {self.bloom()}"
@@ -34,40 +40,38 @@ class FloweringPlant(Plant):
 
 
 class PrizeFlower(FloweringPlant):
-    def __init__(self, name, height, age, flower_color,
-                 bloom_state, prize_points):
+    def __init__(self, name: str, height: int, age: int, flower_color: str,
+                 bloom_state: bool, prize_points: int) -> None:
         super().__init__(name, height, age, flower_color, bloom_state)
         self.prize_points = prize_points
 
-    def award_points(self):
+    def award_points(self) -> str:
         return f"Prize points are {self.prize_points}"
 
-    def get_plant_info(self):
+    def get_plant_info(self) -> str:
         return (f"- {self.name}: {self.height}cm, Prize points: "
-                f"{self.prize_points}"
-                )
+                f"{self.prize_points}")
 
 
 class GardenManager:
     total_gardens_managed = 1
 
-    # class_variable = "I am a class variable"
-    def __init__(self, manager_name):
+    def __init__(self, manager_name: str) -> None:
         self.manager_name = manager_name
-        self.plants = []
-        self.total_growth = 0
+        self.plants: list[Plant] = []
+        self.total_growth: int = 0
         self.inner_instance = self.GardenStats()
 
-    def add_plant(self, plant):
+    def add_plant(self, plant: Plant) -> None:
         self.plants.append(plant)
         print(f"Added {plant.name} to {self.manager_name}'s garden")
 
-    def grow_all(self):
+    def grow_all(self) -> None:
         for plant in self.plants:
             plant.grow()
             self.total_growth += 1
 
-    def generate_report(self):
+    def generate_report(self) -> None:
         plant_count = 0
         stats = self.inner_instance.count(self.plants)
         print("Plants in garden:")
@@ -76,11 +80,10 @@ class GardenManager:
             plant_count += 1
         print()
         print(f"Plants added: {plant_count}, "
-              f"Total growth: {self.total_growth}cm"
-              )
+              f"Total growth: {self.total_growth}cm")
         print(stats)
 
-    def calculate_score(self):
+    def calculate_score(self) -> int:
         score = 0
         for plant in self.plants:
             score += plant.height
@@ -89,23 +92,21 @@ class GardenManager:
         return score
 
     @classmethod
-    def create_garden_network(cls):
-        # print(f"this method is bound to the class {cls.__name__}")
-        # print(f"Accessing class variable: {cls.total_gardens_managed}")
+    def create_garden_network(cls) -> None:
         cls.total_gardens_managed += 1
 
     @staticmethod
-    def validate_height(height):
+    def validate_height(height: int) -> bool:
         if height > 0:
             return True
         else:
             return False
 
     class GardenStats:
-        def __init__(self):
-            self.inner_name = "Inner class"
+        def __init__(self) -> None:
+            self.inner_name: str = "Inner class"
 
-        def count(self, plants):
+        def count(self, plants: list[Plant]) -> str:
             f_count = 0
             p_count = 0
             n_count = 0
@@ -127,15 +128,12 @@ class GardenManager:
 if __name__ == "__main__":
     print("=== Garden Management System Demo ===\n")
 
-    # Create a garden manager
     alice_garden = GardenManager("Alice")
 
-    # Create some plants
     oak_tree = Plant("Oak Tree", 100, 30)
     rose = FloweringPlant("Rose", 25, 10, "red", True)
     sunflower = PrizeFlower("Sunflower", 50, 15, "yellow", True, 10)
 
-    # Add plants to Alice's garden
     alice_garden.add_plant(oak_tree)
     alice_garden.add_plant(rose)
     alice_garden.add_plant(sunflower)
@@ -148,12 +146,9 @@ if __name__ == "__main__":
     print("\n=== Alice's Garden Report ===")
     alice_garden.generate_report()
 
-    # Test static method
     print("\nHeight validation test:",
-          GardenManager.validate_height(rose.height)
-          )
+          GardenManager.validate_height(rose.height))
 
-    # Create another garden manager
     bob_garden = GardenManager("Bob")
     daisy = FloweringPlant("Daisy", 20, 5, "white", False)
     bob_garden.add_plant(daisy)
@@ -161,13 +156,11 @@ if __name__ == "__main__":
 
     print("\n=== Bob's Garden Report ===")
     bob_garden.generate_report()
-    # Print garden scores
     print(
         "\nGarden scores - "
         f"Alice: {alice_garden.calculate_score()}, "
         f"Bob: {bob_garden.calculate_score()}"
     )
 
-    # Test class method
     GardenManager.create_garden_network()
     print(f"Total gardens managed: {GardenManager.total_gardens_managed}")
